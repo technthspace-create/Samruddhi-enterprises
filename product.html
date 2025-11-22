@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Products</title>
+	<link rel="shortcut icon" href="assets/img/logo/ficon.png" type="image/x-icon">
+	<!-- Mobile Specific Meta -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="assets/css/jquery-ui.css">
+	<link rel="stylesheet" href="assets/css/fontawesome-all.css">
+	<link rel="stylesheet" href="assets/css/animate.css">
+	<link rel="stylesheet" href="assets/css/odometer-theme-default.css">
+	<link rel="stylesheet" href="assets/css/video.min.css">
+	<link rel="stylesheet" href="assets/css/slick-theme.css">
+	<link rel="stylesheet" href="assets/css/slick.css">
+	<link rel="stylesheet" href="assets/css/global.css">
+	<link rel="stylesheet" href="assets/css/style.css">
+	<style>
+		/* Modern E-commerce Product Page Styling */
+		#ori-shop-feed {
+			background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+			padding: 80px 0 100px;
+		}
+		
+		.ori-shop-feed-post-items {
+			margin-top: 30px;
+		}
+		
+		.ori-shop-inner-item {
+			background: #1a1a1a;
+			border-radius: 15px;
+			padding: 20px;
+			transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+			border: 1px solid rgba(255, 255, 255, 0.05);
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			margin-bottom: 30px;
+			box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+		}
+		
+		.ori-shop-inner-item:hover {
+			transform: translateY(-8px);
+			box-shadow: 0 12px 40px rgba(255, 116, 37, 0.2);
+			border-color: rgba(255, 116, 37, 0.3);
+			background: #1f1f1f;
+		}
+		
+		.shop-img-cart-btn {
+			background: #0f0f0f;
+			border-radius: 12px;
+			overflow: hidden;
+			position: relative;
+			margin-bottom: 20px;
+			height: 250px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		
+		.shop-img {
+			width: 100%;
+			height: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 20px;
+		}
+		
+		.shop-img img {
+			max-width: 100%;
+			max-height: 100%;
+			object-fit: contain;
+			transition: transform 0.5s ease;
+		}
+		
+		.ori-shop-inner-item:hover .shop-img img {
+			transform: scale(1.1);
+		}
+		
+		.add-cart-btn {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			background: linear-gradient(135deg, #FF7425 0%, #FF8C42 100%);
+			padding: 15px;
+			opacity: 0;
+			transform: translateY(100%);
+			transition: all 0.3s ease;
+		}
+		
+		.ori-shop-inner-item:hover .add-cart-btn {
+			opacity: 1;
+			transform: translateY(0);
+		}
+		
+		.add-cart-btn a {
+			color: #fff;
+			font-weight: 600;
+			font-size: 14px;
+			letter-spacing: 0.5px;
+			text-decoration: none;
+			display: block;
+			text-align: center;
+		}
+		
+		.add-cart-btn a i {
+			margin-right: 6px;
+		}
+		
+		.add-cart-btn:hover {
+			background: linear-gradient(135deg, #FF8C42 0%, #FF7425 100%);
+		}
+		
+		.shop-text {
+			flex-grow: 1;
+			display: flex;
+			flex-direction: column;
+		}
+		
+		.shop-text h3 {
+			margin: 0 0 12px 0;
+			font-size: 18px;
+			font-weight: 600;
+			line-height: 1.4;
+			min-height: 50px;
+		}
+		
+		.shop-text h3 a {
+			color: #fff;
+			text-decoration: none;
+			transition: color 0.3s ease;
+		}
+		
+		.shop-text h3 a:hover {
+			color: #FF7425;
+		}
+		
+		.pro_price {
+			color: #FF7425;
+			font-size: 20px;
+			font-weight: 700;
+			margin-top: auto;
+			display: block;
+		}
+		
+		.pro_price a {
+			color: #FF7425;
+			text-decoration: none;
+			font-size: 16px;
+			font-weight: 600;
+		}
+		
+		.pro_price a:hover {
+			color: #FF8C42;
+			text-decoration: underline;
+		}
+		
+		/* Sidebar Improvements */
+		.ori-shop-sidebar-wrap {
+			position: sticky;
+			top: 100px;
+		}
+		
+		.ori-shop-sidebar-widget {
+			background: #1a1a1a;
+			border-radius: 12px;
+			padding: 30px;
+			margin-bottom: 30px;
+			border: 1px solid rgba(255, 255, 255, 0.05);
+			box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+		}
+		
+		.widget-title {
+			color: #fff;
+			font-size: 22px;
+			font-weight: 700;
+			margin-bottom: 25px;
+			padding-bottom: 15px;
+			border-bottom: 2px solid rgba(255, 116, 37, 0.3);
+		}
+		
+		.best-seller-item {
+			padding: 15px;
+			background: #0f0f0f;
+			border-radius: 8px;
+			margin-bottom: 15px;
+			transition: all 0.3s ease;
+			border: 1px solid transparent;
+		}
+		
+		.best-seller-item:hover {
+			background: #1f1f1f;
+			border-color: rgba(255, 116, 37, 0.3);
+			transform: translateX(5px);
+		}
+		
+		.best-sell-img {
+			border-radius: 8px;
+			overflow: hidden;
+		}
+		
+		.best-sell-text h3 {
+			font-size: 16px;
+			margin-bottom: 8px;
+		}
+		
+		.best-sell-text h3 a {
+			color: #fff;
+			text-decoration: none;
+		}
+		
+		.best-sell-text h3 a:hover {
+			color: #FF7425;
+		}
+		
+		.tag-widget ul {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 10px;
+		}
+		
+		.tag-widget li {
+			margin: 0;
+		}
+		
+		.tag-widget li a {
+			background: #0f0f0f;
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			padding: 8px 16px;
+			border-radius: 20px;
+			transition: all 0.3s ease;
+			display: inline-block;
+		}
+		
+		.tag-widget li a:hover {
+			background: #FF7425;
+			border-color: #FF7425;
+			color: #fff;
+			transform: translateY(-2px);
+		}
+		
+		/* Responsive improvements */
+		@media (max-width: 991px) {
+			.ori-shop-sidebar-wrap {
+				position: relative;
+				top: 0;
+				margin-top: 40px;
+			}
+		}
+		
+		/* Grid improvements */
+		.ori-shop-feed-post-items .row {
+			margin: 0 -15px;
+		}
+		
+		.ori-shop-feed-post-items .row > [class*="col-"] {
+			padding: 0 15px;
+		}
+	</style>
+</head>
+<body class="ori-inner-page">
+	<div id="preloader"></div>
+	<div class="up">
+		<a href="index.html" class="scrollup text-center"><i class="fas fa-chevron-up"></i></a>
+	</div>
+<!-- Start of header section
+	============================================= -->
+	<header id="ori-header" class="ori-header-section header-style-one">
+		<div class="ori-header-content-area">
+			<div class="ori-header-content d-flex align-items-center justify-content-between">
+				<div class="brand-logo">
+					<a href="index.html"><img src="assets/img/logo/logo1.png" alt="Samruddhi Enterprises"></a>
+				</div>
+				<div class="ori-main-navigation-area">
+					<nav class="ori-main-navigation clearfix ul-li">
+						<ul id="main-nav" class="nav navbar-nav clearfix">
+							<li><a href="index.html#ori-slider-1">Home</a></li>
+							<li><a href="index.html#ori-service-1">Profile</a></li>
+							<li><a href="product.html">Products</a></li>
+							<li><a href="index.html#ori-testimonial-1">Testimonials</a></li>
+							<li><a href="contact.html">Contact Us</a></li>
+						</ul>
+					</nav>
+				</div>
+				
+			</div>
+			<div class="mobile_menu position-relative">
+				<div class="mobile_menu_button open_mobile_menu">
+					<i class="fal fa-bars"></i>
+				</div>
+				<div class="mobile_menu_wrap">
+					<div class="mobile_menu_overlay open_mobile_menu"></div>
+					<div class="mobile_menu_content">
+						<div class="mobile_menu_close open_mobile_menu">
+							<i class="fal fa-times"></i>
+						</div>
+						<div class="m-brand-logo">
+							<a href="index.html"><img src="assets/img/logo/logo1.png" alt="Samruddhi Enterprises"></a>
+						</div>
+						<nav class="mobile-main-navigation  clearfix ul-li">
+							<ul id="m-main-nav" class="nav navbar-nav clearfix">
+								<li><a href="index.html#ori-slider-1">Home</a></li>
+								<li><a href="index.html#ori-service-1">Profile</a></li>
+								<li><a href="product.html">Products</a></li>
+								<li><a href="index.html#ori-testimonial-1">Testimonials</a></li>
+								<li><a href="contact.html">Contact Us</a></li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+				<!-- /Mobile-Menu -->
+			</div>
+		</div>
+	</header>
+
+	
+
+<!-- End of header section
+	============================================= -->
+
+<!-- Start of Breadcrumbs  section
+	============================================= -->
+	<section id="ori-breadcrumbs" class="ori-breadcrumbs-section position-relative" data-background="assets/img/bg/bread-bg.png">
+		<div class="container">
+			<div class="ori-breadcrumb-content text-center ul-li">
+				<h1>Products</h1>
+				<ul>
+					<li><a href="index.html">Samruddhi Enterprise</a></li>
+					<li>Products</li>
+				</ul>
+			</div>
+		</div>
+		<div class="line_animation">
+			<div class="line_area"></div>
+			<div class="line_area"></div>
+			<div class="line_area"></div>
+			<div class="line_area"></div>
+			<div class="line_area"></div>
+			<div class="line_area"></div>
+			<div class="line_area"></div>
+			<div class="line_area"></div> 
+		</div>
+	</section>	
+<!-- End of Breadcrumbs section
+	============================================= -->
+
+<!-- Start of Shop Feed Post section
+	============================================= -->
+	<section id="ori-shop-feed" class="ori-shop-feed-section">
+		<div class="container">
+			<div class="ori-shop-feed-content">
+				<div class="row">
+					<div class="col-lg-9">
+						<div class="ori-shop-feed-post-content">
+							<div class="text-center mb-5">
+								<h2 class="text-white mb-3" style="font-size: 36px; font-weight: 700;">Our Products</h2>
+								<p class="text-muted" style="font-size: 18px;">Premium clean room solutions for pharmaceutical and industrial applications</p>
+							</div>
+							<div class="ori-shop-feed-post-items">
+								<div class="row">
+									<div class="col-md-4">
+										<div class="ori-shop-inner-item text-center">
+											<div class="shop-img-cart-btn position-relative">
+												<div class="shop-img">
+													<img src="assets/img/shop/shop1.png" alt="TDF Duct Corner">
+												</div>
+												<div class="add-cart-btn text-uppercase text-center">
+													<a href="TDF-Duct-Corner.html"><i class="fas fa-eye" style="margin-right: 5px;"></i>View Details</a>
+												</div>
+											</div>
+											<div class="shop-text">
+												<h3><a href="TDF-Duct-Corner.html">TDF Duct Corner</a></h3>
+												<span class="pro_price">₹10 / piece</span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="ori-shop-inner-item text-center">
+											<div class="shop-img-cart-btn position-relative">
+												<div class="shop-img">
+													<img src="assets/img/shop/shop2.png" alt="">
+												</div>
+												<div class="add-cart-btn text-uppercase text-center">
+													<a href="Acoustic-Door-Seal.html"><i class="fas fa-eye" style="margin-right: 5px;"></i>View Details</a>
+												</div>
+											</div>
+											<div class="shop-text">
+												<h3><a href="Acoustic-Door-Seal.html">Acoustic Door Seal</a></h3>
+												<span class="pro_price">₹65 / Meter</span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="ori-shop-inner-item text-center">
+											<div class="shop-img-cart-btn position-relative">
+												<div class="shop-img">
+													<img src="assets/img/shop/shop3.png" alt="">
+												</div>
+												<div class="add-cart-btn text-uppercase text-center">
+													<a href="SSD-Door-Handle.html"><i class="fas fa-eye" style="margin-right: 5px;"></i>View Details</a>
+												</div>
+											</div>
+											<div class="shop-text">
+												<h3><a href="SSD-Door-Handle.html">SSD Door Handle</a></h3>
+												<span class="pro_price">₹380 / Piece</span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="ori-shop-inner-item text-center">
+											<div class="shop-img-cart-btn position-relative">
+												<div class="shop-img">
+													<img src="assets/img/shop/shop4.png" alt="">
+												</div>
+												<div class="add-cart-btn text-uppercase text-center">
+													<a href="Tear-Door-Seal.html"><i class="fas fa-eye" style="margin-right: 5px;"></i>View Details</a>
+												</div>
+											</div>
+											<div class="shop-text">
+												<h3><a href="Tear-Door-Seal.html">Tear Door Seal</a></h3>
+												<span class="pro_price">₹130 / Meter</span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="ori-shop-inner-item text-center">
+											<div class="shop-img-cart-btn position-relative">
+												<div class="shop-img">
+													<img src="assets/img/shop/shop5.png" alt="">
+												</div>
+												<div class="add-cart-btn text-uppercase text-center">
+													<a href="Concealed-Flush-Bolt.html"><i class="fas fa-eye" style="margin-right: 5px;"></i>View Details</a>
+												</div>
+											</div>
+											<div class="shop-text">
+												<h3><a href="Concealed-Flush-Bolt.html">Concealed Flush Bolt</a></h3>
+												<span class="pro_price">₹260 / Piece</span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="ori-shop-inner-item text-center">
+											<div class="shop-img-cart-btn position-relative">
+												<div class="shop-img">
+													<img src="assets/img/shop/shop6.png" alt="">
+												</div>
+												<div class="add-cart-btn text-uppercase text-center">
+													<a href="D-Shaped-Rubber-Seal.html"><i class="fas fa-eye" style="margin-right: 5px;"></i>View Details</a>
+												</div>
+											</div>
+											<div class="shop-text">
+												<h3><a href="D-Shaped-Rubber-Seal.html">D Shaped Rubber Seal</a></h3>
+												<span class="pro_price">₹65 / Piece</span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="ori-shop-inner-item text-center">
+											<div class="shop-img-cart-btn position-relative">
+												<div class="shop-img">
+													<img src="assets/img/shop/shop7.png" alt="">
+												</div>
+												<div class="add-cart-btn text-uppercase text-center">
+													<a href="SS-Flush-Bolt.html"><i class="fas fa-eye" style="margin-right: 5px;"></i>View Details</a>
+												</div>
+											</div>
+											<div class="shop-text">
+												<h3><a href="SS-Flush-Bolt.html">SS Flush Bolt</a></h3>
+												<span class="pro_price">₹350 / Piece</span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="ori-shop-inner-item text-center">
+											<div class="shop-img-cart-btn position-relative">
+												<div class="shop-img">
+													<img src="assets/img/shop/shop8.png" alt="">
+												</div>
+												<div class="add-cart-btn text-uppercase text-center">
+													<a href="Automatic-Drop-Down-Seal.html"><i class="fas fa-eye" style="margin-right: 5px;"></i>View Details</a>
+												</div>
+											</div>
+											<div class="shop-text">
+												<h3><a href="Automatic-Drop-Down-Seal.html">Automatic Drop Down Seal</a></h3>
+												<span class="pro_price">₹900 / Piece</span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="ori-shop-inner-item text-center">
+											<div class="shop-img-cart-btn position-relative">
+												<div class="shop-img">
+													<img src="assets/img/shop/shop9.png" alt="">
+												</div>
+												<div class="add-cart-btn text-uppercase text-center">
+													<a href="PVC-Door-Seal.html"><i class="fas fa-eye" style="margin-right: 5px;"></i>View Details</a>
+												</div>
+											</div>
+											<div class="shop-text">
+												<h3><a href="PVC-Door-Seal.html">PVC Door Seal</a></h3>
+												<span class="pro_price">₹175 / Piece</span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="ori-shop-inner-item text-center">
+											<div class="shop-img-cart-btn position-relative">
+												<div class="shop-img">
+													<img src="assets/img/shop/shop10.png" alt="">
+												</div>
+												<div class="add-cart-btn text-uppercase text-center">
+													<a href="Nylon-Brush-Seal.html"><i class="fas fa-eye" style="margin-right: 5px;"></i>View Details</a>
+												</div>
+											</div>
+											<div class="shop-text">
+												<h3><a href="Nylon-Brush-Seal.html">Nylon Brush Seal</a></h3>
+												<span class="pro_price">₹200 / Piece</span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="ori-shop-inner-item text-center">
+											<div class="shop-img-cart-btn position-relative">
+												<div class="shop-img">
+													<img src="assets/img/shop/shop11.png" alt="">
+												</div>
+												<div class="add-cart-btn text-uppercase text-center">
+													<a href="Aluminium-3D-Corner.html"><i class="fas fa-eye" style="margin-right: 5px;"></i>View Details</a>
+												</div>
+											</div>
+											<div class="shop-text">
+												<h3><a href="Aluminium-3D-Corner.html">Aluminium 3D Corner</a></h3>
+												<span class="pro_price">₹45 / Piece</span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="ori-shop-inner-item text-center">
+											<div class="shop-img-cart-btn position-relative">
+												<div class="shop-img">
+													<img src="assets/img/shop/shop12.png" alt="">
+												</div>
+												<div class="add-cart-btn text-uppercase text-center">
+													<a href="Aluminium-Covering.html"><i class="fas fa-eye" style="margin-right: 5px;"></i>View Details</a>
+												</div>
+											</div>
+											<div class="shop-text">
+												<h3><a href="Aluminium-Covering.html">Aluminium Coving</a></h3>
+												<span class="pro_price">₹320 / Meter</span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="ori-shop-inner-item text-center">
+											<div class="shop-img-cart-btn position-relative">
+												<div class="shop-img">
+													<img src="assets/img/shop/shop13.png" alt="">
+												</div>
+												<div class="add-cart-btn text-uppercase text-center">
+													<a href="External-Drop-Seal.html"><i class="fas fa-eye" style="margin-right: 5px;"></i>View Details</a>
+												</div>
+											</div>
+											<div class="shop-text">
+												<h3><a href="External-Drop-Seal.html">External Drop Seal</a></h3>
+												<span class="pro_price">₹1,450 / meter</span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="ori-shop-inner-item text-center">
+											<div class="shop-img-cart-btn position-relative">
+												<div class="shop-img">
+													<img src="assets/img/shop/shop14.png" alt="">
+												</div>
+												<div class="add-cart-btn text-uppercase text-center">
+													<a href="Door-Bottom-Seal.html"><i class="fas fa-eye" style="margin-right: 5px;"></i>View Details</a>
+												</div>
+											</div>
+											<div class="shop-text">
+												<h3><a href="Door-Bottom-Seal.html">Door Seal</a></h3>
+												<span class="pro_price">₹100 / Meter</span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="ori-shop-inner-item text-center">
+											<div class="shop-img-cart-btn position-relative">
+												<div class="shop-img">
+													<img src="assets/img/shop/shop15.png" alt="">
+												</div>
+												<div class="add-cart-btn text-uppercase text-center">
+													<a href="Drop-Down-Door-Seal.html"><i class="fas fa-eye" style="margin-right: 5px;"></i>View Details</a>
+												</div>
+											</div>
+											<div class="shop-text">
+												<h3><a href="Drop-Down-Door-Seal.html">Drop Down Door Seal</a></h3>
+												<span class="pro_price">₹950 / Piece</span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="ori-shop-inner-item text-center">
+											<div class="shop-img-cart-btn position-relative">
+												<div class="shop-img">
+													<img src="assets/img/shop/shop16.png" alt="">
+												</div>
+												<div class="add-cart-btn text-uppercase text-center">
+													<a href="Concealed-Drop-Seal.html"><i class="fas fa-eye" style="margin-right: 5px;"></i>View Details</a>
+												</div>
+											</div>
+											<div class="shop-text">
+												<h3><a href="Concealed-Drop-Seal.html">Concealed Drop Seal</a></h3>
+												<span class="pro_price">₹950 / Piece</span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="ori-shop-inner-item text-center">
+											<div class="shop-img-cart-btn position-relative">
+												<div class="shop-img">
+													<img src="assets/img/shop/shop17.png" alt="">
+												</div>
+												<div class="add-cart-btn text-uppercase text-center">
+													<a href="Door-Interlocking-System.html"><i class="fas fa-eye" style="margin-right: 5px;"></i>View Details</a>
+												</div>
+											</div>
+											<div class="shop-text">
+												<h3><a href="Door-Interlocking-System.html">Door Interlocking System</a></h3>
+												<span class="pro_price">₹9000 / Piece</span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="ori-shop-inner-item text-center">
+											<div class="shop-img-cart-btn position-relative">
+												<div class="shop-img">
+													<img src="assets/img/shop/shop18.png" alt="">
+												</div>
+												<div class="add-cart-btn text-uppercase text-center">
+													<a href="Pass-Box-Controller.html"><i class="fas fa-eye" style="margin-right: 5px;"></i>View Details</a>
+												</div>
+											</div>
+											<div class="shop-text">
+												<h3><a href="Pass-Box-Controller.html">Pass Box Controller</a></h3>
+												<span class="pro_price">₹6000 / Piece</span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="ori-shop-inner-item text-center">
+											<div class="shop-img-cart-btn position-relative">
+												<div class="shop-img">
+													<img src="assets/img/shop/shop19.png" alt="">
+												</div>
+												<div class="add-cart-btn text-uppercase text-center">
+													<a href="SAM14N.html"><i class="fas fa-eye" style="margin-right: 5px;"></i>View Details</a>
+												</div>
+											</div>
+											<div class="shop-text">
+												<h3><a href="SAM14N.html">SAM14N</a></h3>
+												<span class="pro_price"><a href="contact.html">Get Quotaion</a></span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="ori-shop-inner-item text-center">
+											<div class="shop-img-cart-btn position-relative">
+												<div class="shop-img">
+													<img src="assets/img/shop/shop20.png" alt="">
+												</div>
+												<div class="add-cart-btn text-uppercase text-center">
+													<a href="SAM35C.html"><i class="fas fa-eye" style="margin-right: 5px;"></i>View Details</a>
+												</div>
+											</div>
+											<div class="shop-text">
+												<h3><a href="SAM35C.html">SAM35C</a></h3>
+												<span class="pro_price"><a href="contact.html">Get Quotaion</a></span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="ori-shop-inner-item text-center">
+											<div class="shop-img-cart-btn position-relative">
+												<div class="shop-img">
+													<img src="assets/img/shop/shop21.png" alt="">
+												</div>
+												<div class="add-cart-btn text-uppercase text-center">
+													<a href="SAM30C.html"><i class="fas fa-eye" style="margin-right: 5px;"></i>View Details</a>
+												</div>
+											</div>
+											<div class="shop-text">
+												<h3><a href="SAM30C.html">SAM30C</a></h3>
+												<span class="pro_price"><a href="contact.html">Get Quotaion</a></span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="ori-shop-inner-item text-center">
+											<div class="shop-img-cart-btn position-relative">
+												<div class="shop-img">
+													<img src="assets/img/shop/shop22.png" alt="">
+												</div>
+												<div class="add-cart-btn text-uppercase text-center">
+													<a href="SAM74.html"><i class="fas fa-eye" style="margin-right: 5px;"></i>View Details</a>
+												</div>
+											</div>
+											<div class="shop-text">
+												<h3><a href="SAM74.html">SAM74</a></h3>
+												<span class="pro_price"><a href="contact.html">Get Quotaion</a></span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="ori-shop-inner-item text-center">
+											<div class="shop-img-cart-btn position-relative">
+												<div class="shop-img">
+													<img src="assets/img/shop/shop23.png" alt="">
+												</div>
+												<div class="add-cart-btn text-uppercase text-center">
+													<a href="SAM14SM.html"><i class="fas fa-eye" style="margin-right: 5px;"></i>View Details</a>
+												</div>
+											</div>
+											<div class="shop-text">
+												<h3><a href="SAM14SM.html">SAM14SM</a></h3>
+												<span class="pro_price"><a href="contact.html">Get Quotaion</a></span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="ori-shop-inner-item text-center">
+											<div class="shop-img-cart-btn position-relative">
+												<div class="shop-img">
+													<img src="assets/img/shop/shop24.png" alt="">
+												</div>
+												<div class="add-cart-btn text-uppercase text-center">
+													<a href="SAM14FL.html"><i class="fas fa-eye" style="margin-right: 5px;"></i>View Details</a>
+												</div>
+											</div>
+											<div class="shop-text">
+												<h3><a href="SAM14FL.html">SAM14FL</a></h3>
+												<span class="pro_price"><a href="contact.html">Get Quotaion</a></span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="ori-shop-inner-item text-center">
+											<div class="shop-img-cart-btn position-relative">
+												<div class="shop-img">
+													<img src="assets/img/shop/shop25.png" alt="">
+												</div>
+												<div class="add-cart-btn text-uppercase text-center">
+													<a href="SAM12FL.html"><i class="fas fa-eye" style="margin-right: 5px;"></i>View Details</a>
+												</div>
+											</div>
+											<div class="shop-text">
+												<h3><a href="SAM12FL.html">SAM12FL</a></h3>
+												<span class="pro_price"><a href="contact.html">Get Quotaion</a></span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3">
+						<div class="ori-shop-sidebar-wrap">
+							<div class="ori-shop-sidebar-widget">
+								<div class="best-seller-widget ul-li-block">
+									<h3 class="widget-title"><i class="fas fa-star" style="color: #FF7425; margin-right: 8px;"></i>Best Sellers</h3>
+									<div class="best-seller-item-wrap">
+										<div class="best-seller-item d-flex align-items-center">
+											<div class="best-sell-img">
+												<img src="assets/img/shop/shop7.png" alt="SS Flush Bolt">
+											</div>
+											<div class="best-sell-text">
+												<h3><a href="SS-Flush-Bolt.html">SS Flush Bolt</a></h3>
+												<span class="pro_price">₹350.00</span>
+											</div>
+										</div>
+										<div class="best-seller-item d-flex align-items-center">
+											<div class="best-sell-img">
+												<img src="assets/img/shop/shop3.png" alt="SSD Door Handle">
+											</div>
+											<div class="best-sell-text">
+												<h3><a href="SSD-Door-Handle.html">SSD Door Handle</a></h3>
+												<span class="pro_price">₹380.00</span>
+											</div>
+										</div>
+										<div class="best-seller-item d-flex align-items-center">
+											<div class="best-sell-img">
+												<img src="assets/img/shop/shop2.png" alt="Acoustic Door Seal">
+											</div>
+											<div class="best-sell-text">
+												<h3><a href="Acoustic-Door-Seal.html">Acoustic Door Seal</a></h3>
+												<span class="pro_price">₹65.00</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="ori-shop-sidebar-widget">
+								<div class="tag-widget ul-li">
+									<h3 class="widget-title"><i class="fas fa-tags" style="color: #FF7425; margin-right: 8px;"></i>Product Categories</h3>
+									<ul>
+										<li><a href="product.html">Seals</a></li>
+										<li><a href="product.html">Bolts</a></li>
+										<li><a href="product.html">Rubber</a></li>
+										<li><a href="product.html">Metal</a></li>
+										<li><a href="product.html">Nylon</a></li>
+										<li><a href="product.html">Acoustic</a></li>
+										<li><a href="product.html">Plastic</a></li>
+										<li><a href="product.html">Duct</a></li>
+										<li><a href="product.html">Aluminium</a></li>
+										<li><a href="product.html">Door</a></li>
+										<li><a href="product.html">Automatic</a></li>
+										<li><a href="product.html">PVC</a></li>
+										<li><a href="product.html">Pass Box</a></li>
+									</ul>
+								</div>
+							</div>
+							<div class="ori-shop-sidebar-widget text-center" style="background: linear-gradient(135deg, #FF7425 0%, #FF8C42 100%); padding: 30px; border-radius: 12px;">
+								<h3 style="color: #fff; font-size: 20px; margin-bottom: 15px; font-weight: 700;">Need Help?</h3>
+								<p style="color: rgba(255,255,255,0.9); margin-bottom: 20px; font-size: 14px;">Our experts are ready to assist you with product selection and customization.</p>
+								<a href="contact.html" style="display: inline-block; background: #fff; color: #FF7425; padding: 12px 30px; border-radius: 25px; text-decoration: none; font-weight: 600; transition: all 0.3s ease;">Contact Us</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>	
+<!-- End of Shop Feed Post  section
+	============================================= -->	
+
+
+<!-- Start of Footer section
+	============================================= -->
+	<footer id="ori-footer" class="ori-footer-section footer-style-one">
+		<div class="container">
+			<div class="ori-footer-title text-center text-uppercase">
+				<h2>Get In <span>Touch</span> <i class="fas fa-arrow-right"></i></h2>
+			</div>
+			<div class="ori-footer-widget-wrapper">
+				<div class="row">
+					<div class="col-lg-3 col-md-6">
+						<div class="ori-footer-widget">
+							<div class="logo-widget">
+								
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-6">
+						<div class="ori-footer-widget">
+							<div class="menu-location-widget ul-li-block">
+								<h2 class="widget-title text-uppercase">Our Location</h2>
+								<ul>
+									<li><a href="index.html">Kaveri layout, Vajarahalli, Nelamangala, Bangalore,
+										Karnataka – 562123</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-6">
+						<div class="ori-footer-widget">
+							<div class="contact-widget ul-li-block">
+								<h2 class="widget-title text-uppercase">Contact info</h2>
+								<div class="contact-info">
+									<span>Phone: +91 9900454111 / 9036111365</span>
+									<span>Mail: samruddhi.575@gmail.com</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</footer>
+<!-- End of Footer section
+	============================================= -->		
+
+
+	<!-- For Js Library -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery-ui.min.js"></script>
+	<script src="assets/js/bootstrap.min.js"></script>
+	<script src="assets/js/popper.min.js"></script>
+	<script src="assets/js/appear.js"></script>
+	<script src="assets/js/slick.js"></script>
+	<script src="assets/js/twin.js"></script>
+	<script src="assets/js/wow.min.js"></script>
+	<script src="assets/js/knob.js"></script>
+	<script src="assets/js/jquery.filterizr.js"></script>
+	<script src="assets/js/imagesloaded.pkgd.min.js"></script>
+	<script src="assets/js/rbtools.min.js"></script>
+	<script src="assets/js/rs6.min.js"></script>
+	<script src="assets/js/jarallax.js"></script>
+	<script src="assets/js/jquery.inputarrow.js"></script>
+	<script src="assets/js/swiper.min.js"></script>
+	<script src="assets/js/jquery.counterup.min.js"></script>
+	<script src="assets/js/waypoints.min.js"></script>
+	<script src="assets/js/jquery.magnific-popup.min.js"></script>
+	<script src="assets/js/jquery.marquee.min.js"></script>
+	<script src="assets/js/script.js"></script>
+</body>
+</html>			
