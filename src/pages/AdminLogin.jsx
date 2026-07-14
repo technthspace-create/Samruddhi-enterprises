@@ -128,7 +128,8 @@ export default function AdminLogin() {
     setSuccessMessage('')
 
     try {
-      const response = await fetch('/api/admin/login', {
+      const apiBase = import.meta.env.VITE_API_URL || ''
+      const response = await fetch(`${apiBase}/api/admin/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ passcode })

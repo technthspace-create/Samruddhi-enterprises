@@ -48,7 +48,8 @@ export default function ProductDetail() {
         }))
 
         // Fetch related products in the same category
-        const catalogRes = await fetch('/api/products')
+        const apiBase = import.meta.env.VITE_API_URL || ''
+        const catalogRes = await fetch(`${apiBase}/api/products`)
         if (catalogRes.ok) {
           const allProducts = await catalogRes.json()
           const filtered = allProducts.filter(
@@ -74,7 +75,8 @@ export default function ProductDetail() {
     e.preventDefault()
     setIsSubmitting(true)
     try {
-      const res = await fetch('/api/contact', {
+      const apiBase = import.meta.env.VITE_API_URL || ''
+      const res = await fetch(`${apiBase}/api/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

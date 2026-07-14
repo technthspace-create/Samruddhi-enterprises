@@ -30,7 +30,8 @@ export default function ProductsCatalog() {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const res = await fetch('/api/products')
+        const apiBase = import.meta.env.VITE_API_URL || ''
+        const res = await fetch(`${apiBase}/api/products`)
         if (res.ok) {
           const data = await res.json()
           setProducts(data)
@@ -104,7 +105,8 @@ export default function ProductsCatalog() {
         ]
       }
 
-      const res = await fetch('/api/contact', {
+      const apiBase = import.meta.env.VITE_API_URL || ''
+      const res = await fetch(`${apiBase}/api/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

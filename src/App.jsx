@@ -31,10 +31,17 @@ function ScrollToHashAndTop() {
   useEffect(() => {
     const { hash } = location
     if (hash) {
-      const el = document.querySelector(hash)
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-        return
+      try {
+        // Ensure the hash is a valid CSS id selector (starts with # and followed by valid characters)
+        if (/^#[a-zA-Z_][a-zA-Z0-9_-]*$/.test(hash)) {
+          const el = document.querySelector(hash)
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+            return
+          }
+        }
+      } catch (err) {
+        console.warn('Invalid hash selector:', hash, err)
       }
     }
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' })

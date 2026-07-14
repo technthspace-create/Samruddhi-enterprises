@@ -64,15 +64,16 @@ export default function AdminDashboard() {
   async function loadData(authToken) {
     setIsLoading(true)
     try {
+      const apiBase = import.meta.env.VITE_API_URL || ''
       // Load Products
-      const prodRes = await fetch('/api/products')
+      const prodRes = await fetch(`${apiBase}/api/products`)
       if (prodRes.ok) {
         const prodData = await prodRes.json()
         setProducts(prodData)
       }
       
       // Load Inquiries
-      const inqRes = await fetch('/api/inquiries', {
+      const inqRes = await fetch(`${apiBase}/api/inquiries`, {
         headers: { 'Authorization': `Bearer ${authToken}` }
       })
       if (inqRes.ok) {
@@ -198,7 +199,8 @@ export default function AdminDashboard() {
     const reader = new FileReader()
     reader.onload = async () => {
       try {
-        const res = await fetch('/api/admin/upload', {
+        const apiBase = import.meta.env.VITE_API_URL || ''
+        const res = await fetch(`${apiBase}/api/admin/upload`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
