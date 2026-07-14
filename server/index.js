@@ -332,7 +332,7 @@ const distPath = path.join(projectRoot, 'dist')
 app.use(express.static(distPath))
 
 // Catch-all route to serve React app for frontend navigation
-app.get('*', (req, res) => {
+app.get(/.*/, (req, res) => {
   if (!req.path.startsWith('/api/')) {
     const indexPath = path.join(distPath, 'index.html')
     if (fs.existsSync(indexPath)) {
