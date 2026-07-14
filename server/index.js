@@ -327,6 +327,22 @@ function escapeHtml(s) {
     .replaceAll("'", '&#39;')
 }
 
+// Serve static assets in production (if built)
+const distPath = path.join(projectRoot, 'dist')
+app.use(express.static(distPath))
+
+// Catch-all route to serve React app for frontend navigation
+app.get('*', (req, res) => {
+  if (!req.path.startsWith('/api/')) {
+    const indexPath = path.join(distPath, 'index.html')
+    if (fs.existsSync(indexPath)) {
+      res.sendFile(indexPath)
+    } else {
+      res.status(404).send('Frontend build not found. Run "npm run build" first.')
+    }
+  }
+})
+
 const port = Number(process.env.PORT || 8787)
 app.listen(port, () => {
   console.log(`API server listening on http://127.0.0.1:${port}`)
